@@ -1,17 +1,19 @@
 <Project>
-    <PropertyGroup>
-        <!-- Enable central package management, https://learn.microsoft.com/en-us/nuget/consume-packages/Central-Package-Management -->
-        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-    </PropertyGroup>
-    <ItemGroup>
-        <PackageVersion Include="Avalonia" Version="11.3.1" />
-        <PackageVersion Include="Avalonia.Desktop" Version="11.3.1" />
-        <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.3.1" />
-        <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.3.1" />
-        <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.1">
-            <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
-            <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
-        </PackageVersion>
-        <PackageVersion Include="Avalonia.ReactiveUI" Version="11.3.1" />
-    </ItemGroup>
+  <PropertyGroup>
+    <!-- Enable central package management, https://learn.microsoft.com/en-us/nuget/consume-packages/Central-Package-Management -->
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Avalonia" Version="11.3.1" />
+    <PackageVersion Include="Avalonia.Desktop" Version="11.3.1" />
+    <PackageVersion Include="Avalonia.Themes.Fluent" Version="11.3.1" />
+    <PackageVersion Include="Avalonia.Fonts.Inter" Version="11.3.1" />
+    <PackageVersion Include="Avalonia.Diagnostics" Version="11.3.1">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageVersion>
+    <PackageVersion Include="Avalonia.ReactiveUI" Version="11.3.1" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3" />
+    <PackageVersion Include="ZLogger" Version="2.5.10" />
+  </ItemGroup>
 </Project>
