@@ -1,3 +1,4 @@
-﻿global using Microsoft.Extensions.DependencyInjection;
+﻿global using LiteDB;
+global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.Extensions.Logging;
 global using ZLogger;

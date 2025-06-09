@@ -1,9 +1,15 @@
-﻿using Megumi.Core.Logging;
+﻿using AleRoe.LiteDB.Extensions.DependencyInjection;
+using Megumi.Core.Database;
+using Megumi.Core.Logging;
 
 namespace Megumi.Core.Extensions;
 
 public static class CoreServiceExtensions
 {
+    /// <summary>
+    /// Register ZLogger logging.
+    /// </summary>
+    /// <param name="collection"></param>
     public static void RegisterLogging(this IServiceCollection collection)
     {
         collection.AddLogging(x =>
@@ -26,5 +32,20 @@ public static class CoreServiceExtensions
                 return "./log.txt";
             });
         });
+    }
+
+    /// <summary>
+    /// Register core services.
+    /// </summary>
+    /// <param name="collection"></param>
+    public static void RegisterCoreServices(this IServiceCollection collection)
+    {
+        collection.AddLiteDatabase(o =>
+        {
+            o.ConnectionString.Filename = "./data.db";
+            // Need shared because access will happen on different threads
+            o.ConnectionString.Connection = ConnectionType.Shared;
+        });
+        collection.AddSingleton<IDatabaseService, DatabaseService>();
     }
 }
