@@ -18,6 +18,19 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+    <DockPanel>
+        <!-- Top menu -->
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Actions"></MenuItem>
+            <MenuItem Header="Selected"></MenuItem>
+            <MenuItem Header="Sort"></MenuItem>
+            <MenuItem Header="View"></MenuItem>
+            <MenuItem Header="Options"></MenuItem>
+            <MenuItem Header="Internet"></MenuItem>
+        </Menu>
+        
+        <!-- File explorer -->
+        <Grid DockPanel.Dock="Top"></Grid>
+    </DockPanel>
 
 </Window>

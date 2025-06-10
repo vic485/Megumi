@@ -7,7 +7,9 @@ public class MainWindowViewModel : ViewModelBase
     public int WindowHeight { get => _database.Config.WindowHeight; set => _database.Config.WindowHeight = value; }
     public int WindowWidth { get => _database.Config.WindowWidth; set => _database.Config.WindowWidth = value; }
     
-    private IDatabaseService _database;
+    private readonly IDatabaseService _database;
+
+    public MainWindowViewModel(){}
 
     public MainWindowViewModel(ILogger<MainWindowViewModel> logger, IDatabaseService database)
     {
