@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="AleRoe.LiteDB.Extensions.DependencyInjection" />
+      <PackageReference Include="Avalonia.ReactiveUI" />
       <PackageReference Include="LiteDB" />
       <PackageReference Include="ZLogger" />
     </ItemGroup>

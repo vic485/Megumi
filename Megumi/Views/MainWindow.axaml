@@ -1,6 +1,7 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:Megumi.ViewModels"
+        xmlns:cm="using:Megumi.Core.Models"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="1100" d:DesignHeight="600"
@@ -10,7 +11,8 @@
         x:Class="Megumi.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/megumi-icon.png"
-        Title="Megumi">
+        Title="Megumi"
+        RenderOptions.BitmapInterpolationMode="HighQuality">
 
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -28,9 +30,43 @@
             <MenuItem Header="Options"></MenuItem>
             <MenuItem Header="Internet"></MenuItem>
         </Menu>
-        
-        <!-- File explorer -->
-        <Grid DockPanel.Dock="Top"></Grid>
+
+        <!-- Navigation bar -->
+        <!-- Back, forward, up buttons; location bar w/ directory buttons; search bar -->
+
+        <!-- Main view -->
+        <Grid DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <!--ColumnDefinition Width="{Binding SidebarWidth}" /-->
+                <!--ColumnDefinition Width="Auto" /-->
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!-- Bookmarks -->
+            <!--ListBox Grid.Column="0"></ListBox-->
+            <!--GridSplitter Grid.Column="1" ResizeDirection="Columns" /-->
+            <!-- File explorer -->
+            <Grid Grid.Column="0"> <!-- TODO: This becomes col 2 when other parts are ready -->
+                <!-- Icons view -->
+                <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Multiple">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type cm:FileSystemObject}">
+                            <StackPanel>
+                                <Image Source="{Binding Icon}" />
+                                <TextBlock Width="54" Text="{Binding Name}" TextAlignment="Center" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <!-- List view -->
+            </Grid>
+        </Grid>
+        <!-- Footer bar -->
+        <!-- Selected item information, zoom slider/wheel -->
     </DockPanel>
 
 </Window>
