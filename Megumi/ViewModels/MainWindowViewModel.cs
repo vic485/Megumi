@@ -1,4 +1,7 @@
-﻿namespace Megumi.ViewModels;
+﻿using System.Collections.ObjectModel;
+using Megumi.Core.Models;
+
+namespace Megumi.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
@@ -9,7 +12,11 @@ public class MainWindowViewModel : ViewModelBase
     
     private readonly IDatabaseService _database;
 
-    public MainWindowViewModel(){}
+    public ObservableCollection<FileSystemObject> Items { get; } = [];
+
+    public MainWindowViewModel()
+    {
+    }
 
     public MainWindowViewModel(ILogger<MainWindowViewModel> logger, IDatabaseService database)
     {

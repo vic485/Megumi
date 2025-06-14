@@ -20,6 +20,21 @@
         <vm:MainWindowViewModel />
     </Design.DataContext>
 
+    <Window.Styles>
+        <Style Selector="TextBox">
+            <Setter Property="FontFamily" Value="{StaticResource IbmPlex}" />
+        </Style>
+    </Window.Styles>
+
+    <Window.Resources>
+        <DataTemplate x:Key="IconViewTemplate" x:DataType="{x:Type cm:FileSystemObject}">
+            <StackPanel Width="80" Spacing="10">
+                <Image Source="{Binding Icon}" Width="60" Height="60" Margin="5 5 5 2" />
+                <TextBlock Text="{Binding Name}" />
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
+
     <DockPanel>
         <!-- Top menu -->
         <Menu DockPanel.Dock="Top">
@@ -32,7 +47,21 @@
         </Menu>
 
         <!-- Navigation bar -->
-        <!-- Back, forward, up buttons; location bar w/ directory buttons; search bar -->
+        <DockPanel DockPanel.Dock="Top" Height="50" Margin="10 0">
+            <Button Content="&lt;-" /> <!-- Back -->
+            <Button Content="-&gt;" /> <!-- Forward -->
+            <Button Content="^" /> <!-- Up -->
+            <Button Content="&lt; &gt;" /> <!-- Refresh -->
+
+            <Grid ColumnDefinitions="* 250">
+                <TextBox x:Name="PathBox" Grid.Column="0" Text="Example" />
+                <!-- TODO: custom box with buttons over path segements -->
+
+                <Grid Grid.Column="1">
+                    <TextBox x:Name="SearchBox" Watermark="Search" />
+                </Grid>
+            </Grid>
+        </DockPanel>
 
         <!-- Main view -->
         <Grid DockPanel.Dock="Top">
@@ -46,23 +75,14 @@
             <!--GridSplitter Grid.Column="1" ResizeDirection="Columns" /-->
             <!-- File explorer -->
             <Grid Grid.Column="0"> <!-- TODO: This becomes col 2 when other parts are ready -->
-                <!-- Icons view -->
-                <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionMode="Multiple">
+                <ListBox x:Name="FileDisplay" SelectionMode="Multiple" ItemTemplate="{StaticResource IconViewTemplate}"
+                         ItemsSource="{Binding Items}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel />
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate DataType="{x:Type cm:FileSystemObject}">
-                            <StackPanel>
-                                <Image Source="{Binding Icon}" />
-                                <TextBlock Width="54" Text="{Binding Name}" TextAlignment="Center" TextWrapping="Wrap" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
                 </ListBox>
-                <!-- List view -->
             </Grid>
         </Grid>
         <!-- Footer bar -->

@@ -7,4 +7,8 @@
     <Application.Styles>
         <FluentTheme />
     </Application.Styles>
+
+    <Application.Resources>
+        <FontFamily x:Key="IbmPlex">avares://Megumi/Assets/Font/IBMPlexSansJP-Regular.ttf#IBM Plex Sans JP</FontFamily>
+    </Application.Resources>
 </Application>
