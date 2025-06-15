@@ -43,7 +43,8 @@ public class LogConsoleFormatter : IZLoggerFormatter
         }
 
         utf8Writer.AppendUtf8(" ("u8);
-        utf8Writer.AppendUtf8(entry.LogInfo.Category.Utf8Span[7..]);
+        //utf8Writer.AppendUtf8(entry.LogInfo.Category.Utf8Span[7..]);
+        utf8Writer.AppendUtf8(entry.LogInfo.Category.Utf8Span);
         utf8Writer.AppendUtf8(") "u8);
         utf8Writer.Append(entry.ToString());
 
