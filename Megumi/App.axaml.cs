@@ -4,13 +4,17 @@ using Avalonia.Markup.Xaml;
 using Megumi.Core.Extensions;
 using Megumi.Extensions;
 using Megumi.Views;
+using Microsoft.Extensions.Hosting;
+using Splat.Microsoft.Extensions.DependencyInjection;
 
 namespace Megumi;
 
 public partial class App : Application
 {
-    private ServiceProvider _serviceProvider;
-    
+    private IHost _host;
+
+    public IServiceProvider Services => _host.Services;
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -18,28 +22,45 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        // Register all the services needed for the application to run
-        var collection = new ServiceCollection();
-        collection.RegisterLogging();
-        collection.RegisterCoreServices();
-        collection.AddViewModels();
+        var hostBuilder = new HostBuilder().ConfigureServices((context, services) =>
+        {
+            services.UseMicrosoftDependencyResolver();
+            var resolver = Locator.CurrentMutable;
+            resolver.InitializeSplat();
 
-        // Creates a ServiceProvider containing services from the provided IServiceCollection
-        _serviceProvider = collection.BuildServiceProvider();
+            resolver.RegisterConstant(new AvaloniaActivationForViewFetcher(), typeof(IActivationForViewFetcher));
+            resolver.RegisterConstant(new AutoDataTemplateBindingHook(), typeof(IPropertyBindingHook));
+            RxApp.MainThreadScheduler = AvaloniaScheduler.Instance;
 
-        _serviceProvider.GetRequiredService<IDatabaseService>().Initialize();
-        var vm = _serviceProvider.GetRequiredService<MainWindowViewModel>();
+            services.RegisterLogging();
+            services.RegisterCoreServices();
+            services.AddViews();
+            services.AddViewModels();
+        });
+
+        _host = hostBuilder.Build();
+        _host.Services.UseMicrosoftDependencyResolver();
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new MainWindow
+            Services.GetService<IDatabaseService>()!.Initialize();
+            var window = new MainWindow();
+            var vm = Services.GetService<Megumi.Core.ViewModels.MainWindowViewModel>();
+            window.DataContext = vm;
+
+            desktop.MainWindow = window;
+            desktop.MainWindow.Show();
+
+            desktop.Exit += async (_, _) =>
             {
-                DataContext = vm
+                using (_host)
+                {
+                    Services.GetService<IDatabaseService>()?.SaveConfig();
+                    await _host.StopAsync();
+                }
             };
-            desktop.Exit += (_, _) => OnExit();
         }
 
         base.OnFrameworkInitializationCompleted();
     }
-
-    private void OnExit() => _serviceProvider.GetRequiredService<IDatabaseService>().SaveConfig();
 }

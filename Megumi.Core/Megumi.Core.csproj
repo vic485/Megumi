@@ -10,6 +10,8 @@
       <PackageReference Include="AleRoe.LiteDB.Extensions.DependencyInjection" />
       <PackageReference Include="Avalonia.ReactiveUI" />
       <PackageReference Include="LiteDB" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" />
+      <PackageReference Include="ReactiveUI.Validation" />
       <PackageReference Include="ZLogger" />
     </ItemGroup>
 

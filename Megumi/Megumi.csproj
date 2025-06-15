@@ -21,6 +21,11 @@
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" />
         <PackageReference Include="Avalonia.ReactiveUI" />
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+        <PackageReference Include="Splat.DependencyInjection.SourceGenerator">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Splat.Microsoft.Extensions.DependencyInjection" />
     </ItemGroup>
 
     <ItemGroup>

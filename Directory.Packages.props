@@ -15,7 +15,11 @@
     </PackageVersion>
     <PackageVersion Include="Avalonia.ReactiveUI" Version="11.3.1" />
     <PackageVersion Include="LiteDB" Version="5.0.21" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.6" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting" Version="9.0.6" />
+    <PackageVersion Include="ReactiveUI.Validation" Version="4.1.1" />
+    <PackageVersion Include="Splat.DependencyInjection.SourceGenerator" Version="1.2.3" />
+    <PackageVersion Include="Splat.Microsoft.Extensions.DependencyInjection" Version="15.3.1" />
     <PackageVersion Include="ZLogger" Version="2.5.10" />
   </ItemGroup>
 </Project>

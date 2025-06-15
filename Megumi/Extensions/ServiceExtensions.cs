@@ -1,9 +1,11 @@
-﻿namespace Megumi.Extensions;
+﻿using System.Reflection;
+
+namespace Megumi.Extensions;
 
 public static class ServiceExtensions
 {
-    public static void AddViewModels(this IServiceCollection services)
+    public static void AddViews(this IServiceCollection services)
     {
-        services.AddTransient<MainWindowViewModel>();
+        Locator.CurrentMutable.RegisterViewsForViewModels(Assembly.GetExecutingAssembly());
     }
 }

@@ -1,6 +1,6 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="using:Megumi.ViewModels"
+        xmlns:vm="using:Megumi.Core.ViewModels"
         xmlns:cm="using:Megumi.Core.Models"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -75,14 +75,15 @@
             <!--GridSplitter Grid.Column="1" ResizeDirection="Columns" /-->
             <!-- File explorer -->
             <Grid Grid.Column="0"> <!-- TODO: This becomes col 2 when other parts are ready -->
-                <ListBox x:Name="FileDisplay" SelectionMode="Multiple" ItemTemplate="{StaticResource IconViewTemplate}"
+                <!--ListBox x:Name="FileDisplay" SelectionMode="Multiple" ItemTemplate="{StaticResource IconViewTemplate}"
                          ItemsSource="{Binding Items}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel />
                         </ItemsPanelTemplate>
                     </ListBox.ItemsPanel>
-                </ListBox>
+                </ListBox-->
+                <ContentControl Content="{Binding ExplorerViewModel}" />
             </Grid>
         </Grid>
         <!-- Footer bar -->

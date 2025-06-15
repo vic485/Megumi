@@ -1,6 +1,6 @@
 ﻿using AleRoe.LiteDB.Extensions.DependencyInjection;
-using Megumi.Core.Database;
 using Megumi.Core.Logging;
+using Megumi.Core.ViewModels;
 
 namespace Megumi.Core.Extensions;
 
@@ -47,5 +47,15 @@ public static class CoreServiceExtensions
             o.ConnectionString.Connection = ConnectionType.Shared;
         });
         collection.AddSingleton<IDatabaseService, DatabaseService>();
+    }
+
+    /// <summary>
+    /// Add View Models to service collection.
+    /// </summary>
+    /// <param name="collection"></param>
+    public static void AddViewModels(this IServiceCollection collection)
+    {
+        collection.AddSingleton<MainWindowViewModel>();
+        collection.AddSingleton<ExplorerViewModel>();
     }
 }
