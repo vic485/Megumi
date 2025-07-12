@@ -36,6 +36,8 @@ public partial class App : Application
             services.RegisterCoreServices();
             services.AddViews();
             services.AddViewModels();
+            // TODO: Provider directory should probably be more clearly defined and not relative.
+            services.AddFileService("./providers");
         });
 
         _host = hostBuilder.Build();

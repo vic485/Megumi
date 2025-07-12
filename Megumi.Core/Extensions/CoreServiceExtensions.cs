@@ -58,4 +58,19 @@ public static class CoreServiceExtensions
         collection.AddSingleton<MainWindowViewModel>();
         collection.AddSingleton<ExplorerViewModel>();
     }
+
+    /// <summary>
+    /// Add <see cref="ProviderService"/> and load file providers.
+    /// </summary>
+    /// <param name="collection"></param>
+    /// <param name="providerDirectory">Location of file provider dlls.</param>
+    public static void AddFileService(this IServiceCollection collection, string providerDirectory)
+    {
+        collection.AddSingleton(provider =>
+        {
+            var loggerFactory = provider.GetService<ILoggerFactory>();
+            var providers = FileProviderLoader.LoadProviders(providerDirectory, loggerFactory!);
+            return new ProviderService(providers);
+        });
+    }
 }
