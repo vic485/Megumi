@@ -33,14 +33,16 @@ public static class FileProviderLoader
 
             foreach (var type in fileProviderTypes)
             {
-                var loggerType = typeof(ILogger<>).MakeGenericType(type);
-                var logger = loggerFactory.CreateLogger(type);
+                // TODO: It would be preferred to create ILogger<T> and pass that instead of the ILoggerFactory and relying
+                // on the provider to create it's own logger. Also is a connection to the database needed for network accounts, etc.?
+                //var loggerType = typeof(ILogger<>).MakeGenericType(type);
+                //var logger = loggerFactory.CreateLogger(type);
                 
-                // Find constructor that accepts ILogger<T>
+                // Find constructor that accepts ILoggerFactory
                 var constructor = type.GetConstructors().FirstOrDefault(c =>
                 {
                     var parameters = c.GetParameters();
-                    return parameters.Length == 1 && parameters[0].ParameterType == loggerType;
+                    return parameters.Length == 1 && parameters[0].ParameterType == typeof(ILoggerFactory);
                 });
                 
                 if (constructor == null)
@@ -49,7 +51,7 @@ public static class FileProviderLoader
                     continue;
                 }
                 
-                var instance = (IFileProvider)constructor.Invoke([logger]);
+                var instance = (IFileProvider)constructor.Invoke([loggerFactory]);
                 if (!providers.TryAdd(instance.Prefix, instance))
                 {
                     log.ZLogWarning($"Provider for {instance.Prefix} is already loaded.");
