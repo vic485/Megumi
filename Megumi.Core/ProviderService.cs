@@ -1,4 +1,6 @@
-﻿using Megumi.Core.Interfaces;
+﻿using System.Text.RegularExpressions;
+using Megumi.Core.Interfaces;
+using Megumi.Core.Models;
 
 namespace Megumi.Core;
 
@@ -14,8 +16,21 @@ public class ProviderService
         _providers = providers;
     }
 
+    public async Task<DirectoryObject> GetDirectory(string path)
+    {
+        var provider = ResolveProvider(path);
+        return await provider.GetDirectoryAsync(path);
+    }
+
     private IFileProvider ResolveProvider(string path)
     {
-        throw new NotImplementedException();
+        var regex = new Regex(@"^[a-zA-Z][a-zA-Z0-9+.-]*://");
+        var match = regex.Match(path);
+        if (match.Success && _providers.TryGetValue(match.Value, out var provider))
+            return provider;
+
+        throw new NotSupportedException(match.Success
+            ? $"No provider for {match.Value}"
+            : "Unknown filesystem scheme.");
     }
 }

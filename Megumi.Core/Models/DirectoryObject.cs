@@ -22,4 +22,8 @@ public class DirectoryObject : FileSystemObject
         IsSystem = attributes.HasFlag(FileAttributes.System);
         IsSymbolic = attributes.HasFlag(FileAttributes.ReparsePoint);
     }
+    
+    public List<DirectoryObject> Directories { get; set; }
+    
+    public List<FileObject> Files { get; set; }
 }
